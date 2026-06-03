@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Bolão Copa 2026 - 1ª Fase</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+    h1 { text-align: center; color: #006400; }
+    table { border-collapse: collapse; width: 100%; background: #fff; }
+    th, td { border: 1px solid #ccc; padding: 6px; text-align: center; }
+    input[type="number"] { width: 40px; text-align: center; }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #006400;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover { background-color: #228B22; }
+  </style>
+
+
+</head>
+<body>
+
+  <!-- Aqui você coloca a tabela de jogos da 1ª fase -->
+
+  <!-- Botão para voltar -->
+  <button onclick="window.location.href='index.html'">Voltar para Página Principal</button>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Bolão Copa 2026</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+    h1 { text-align: center; color: #006400; }
+    table { border-collapse: collapse; width: 100%; background: #fff; }
+    th, td { border: 1px solid #ccc; padding: 6px; text-align: center; }
+    input[type="number"] { width: 40px; text-align: center; }
+    input[type="text"] { width: 200px; }
+    button { margin-top: 15px; padding: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Bolão Copa do Mundo 2026 - Primeira Fase</h1>
+
+  <label>Nome do participante: <input type="text" id="nome"></label>
+
+  <table id="tabela">
+    <tr>
+      <th>Data</th>
+      <th>Confronto</th>
+      
+    </tr>
+    <tr><td>11/06/2026</td><td>México <input type="number"> x <input type="number"> África do Sul</td></tr>
+    <tr><td>11/06/2026</td><td>Coreia do Sul <input type="number"> x <input type="number"> Tchéquia</td></tr>
+    <tr><td>12/06/2026</td><td>Canadá <input type="number"> x <input type="number"> Bósnia</td></tr>
+    <tr><td>12/06/2026</td><td>Estados Unidos <input type="number"> x <input type="number"> Paraguai</td></tr>
+    <tr><td>13/06/2026</td><td>Catar <input type="number"> x <input type="number"> Suíça</td></tr>
+    <tr><td>13/06/2026</td><td>Brasil <input type="number"> x <input type="number"> Marrocos</td></tr>
+    <tr><td>13/06/2026</td><td>Haiti <input type="number"> x <input type="number"> Escócia</td></tr>
+    <tr><td>14/06/2026</td><td>Austrália <input type="number"> x <input type="number"> Turquia</td></tr>
+    <tr><td>14/06/2026</td><td>Alemanha <input type="number"> x <input type="number"> Curaçau</td></tr>
+    <tr><td>14/06/2026</td><td>Países Baixos <input type="number"> x <input type="number"> Japão</td></tr>
+    <tr><td>14/06/2026</td><td>Costa do Marfim <input type="number"> x <input type="number"> Equador</td></tr>
+    <tr><td>14/06/2026</td><td>Suécia <input type="number"> x <input type="number"> Tunísia</td></tr>
+    <tr><td>15/06/2026</td><td>Espanha <input type="number"> x <input type="number"> Cabo Verde</td></tr>
+    <tr><td>15/06/2026</td><td>Bélgica <input type="number"> x <input type="number"> Egito</td></tr>
+    <tr><td>15/06/2026</td><td>Arábia Saudita <input type="number"> x <input type="number"> Uruguai</td></tr>
+    <tr><td>15/06/2026</td><td>Irã <input type="number"> x <input type="number"> Nova Zelândia</td></tr>
+    <tr><td>16/06/2026</td><td>França <input type="number"> x <input type="number"> Senegal</td></tr>
+    <tr><td>16/06/2026</td><td>Iraque <input type="number"> x <input type="number"> Noruega</td></tr>
+    <tr><td>16/06/2026</td><td>Argentina <input type="number"> x <input type="number"> Argélia</td></tr>
+    <tr><td>17/06/2026</td><td>Áustria <input type="number"> x <input type="number"> Jordânia</td></tr>
+    <tr><td>17/06/2026</td><td>Portugal <input type="number"> x <input type="number"> RD do Congo</td></tr>
+    <tr><td>17/06/2026</td><td>Inglaterra <input type="number"> x <input type="number"> Croácia</td></tr>
+    <tr><td>17/06/2026</td><td>Gana <input type="number"> x <input type="number"> Panamá</td></tr>
+    <tr><td>17/06/2026</td><td>Uzbequistão <input type="number"> x <input type="number"> Colômbia</td></tr>
+  </table>
+
+  <button onclick="salvarCSV()">Salvar em Excel (CSV)</button>
+
+  <script>
+    function salvarCSV() {
+      const nome = document.getElementById("nome").value || "Participante";
+      const linhas = [];
+      const tabela = document.querySelectorAll("#tabela tr");
+
+      tabela.forEach((linha, i) => {
+        const cols = linha.querySelectorAll("td, th");
+        if (i === 0) {
+          linhas.push("Nome," + Array.from(cols).map(c => c.innerText).join(","));
+        } else {
+          const data = cols[0].innerText;
+          const confrontoTexto = cols[1].innerText;
+          const inputs = cols[1].querySelectorAll("input");
+          const placar1 = inputs[0].value || "0";
+          const placar2 = inputs[1].value || "0";
+
+          let ganhador = "Empate";
+          const times = confrontoTexto.split(" x ");
+          if (parseInt(placar1) > parseInt(placar2)) ganhador = times[0].trim();
+          else if (parseInt(placar2) > parseInt(placar1)) ganhador = times[1].trim();
+
+          linhas.push([nome, data, confrontoTexto, placar1, placar2, ganhador].join(","));
+        }
+      });
+
+      const csv = linhas.join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "bolao_copa2026.csv";
+      link.click();
+    }
+     
+  </script>
+</body>
+</html>
+
