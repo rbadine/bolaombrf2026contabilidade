@@ -78,29 +78,86 @@
   <button onclick="salvarPDF()">Salvar em PDF</button>
 
   <script>
-    // trava placar negativo
-    document.querySelectorAll('input[type="number"]').forEach(input => {
-      input.addEventListener('input', () => {
-        if (parseInt(input.value) < 0) {
-          input.value = 0;
-          alert("Não é permitido placar negativo!");
-        }
-      });
-    });
-
-    function validarNome() {
-      const nome = document.getElementById("nome").value.trim();
-      if (!nome) {
-        alert("Por favor, preencha o nome antes de salvar!");
-        return null;
+  // trava placar negativo
+  document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.addEventListener('input', () => {
+      if (parseInt(input.value) < 0) {
+        input.value = 0;
+        alert("Não é permitido placar negativo!");
       }
-      return nome;
+    });
+  });
+
+  function validarNome() {
+    const nome = document.getElementById("nome").value.trim();
+    if (!nome) {
+      alert("Por favor, preencha o nome antes de salvar!");
+      return null;
+    }
+    return nome;
+  }
+
+function coletarDados(nome) {
+    const dados = [];
+    const linhas = document.querySelectorAll("#tabela tr");
+    // Cabeçalho
+    dados.push(["Nome", "Data", "Time 1", "Placar 1", "Time 2", "Placar 2", "Ganhador"]);
+
+    linhas.forEach((linha, i) => {
+      if (i === 0) return; // pula cabeçalho da tabela
+      const cols = linha.querySelectorAll("td");
+      const data = cols[0].innerText;
+      const confrontoTexto = cols[1].innerText;
+      const inputs = cols[1].querySelectorAll("input");
+      const placar1 = inputs[0].value || "0";
+      const placar2 = inputs[1].value || "0";
+
+      // separa os times
+      const partes = confrontoTexto.split(" x ");
+      const time1 = partes[0].replace(/\d+/g, "").trim();
+      const time2 = partes[1].replace(/\d+/g, "").trim();
+
+      let ganhador = "Empate";
+      if (parseInt(placar1) > parseInt(placar2)) ganhador = time1;
+      else if (parseInt(placar2) > parseInt(placar1)) ganhador = time2;
+
+      dados.push([nome, data, time1, placar1, time2, placar2, ganhador]);
+    });
+    return dados;
+  }
+
+  function salvarXLSX() {
+    const nome = validarNome();
+    if (!nome) return;
+    const dados = coletarDados(nome);
+    const ws = XLSX.utils.aoa_to_sheet(dados);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Bolão");
+    XLSX.writeFile(wb, "bolao_copa2026.xlsx");
+  }
+
+  function salvarPDF() {
+    const nome = validarNome();
+    if (!nome) return;
+    const dados = coletarDados(nome);
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFontSize(12);
+    doc.text(`Bolão Copa 2026 - Participante: ${nome}`, 10, 10);
+
+    // cabeçalho da tabela
+    let y = 20;
+    doc.text(dados[0].join(" | "), 10, y);
+    y += 10;
+
+    // linhas da tabela
+    for (let i = 1; i < dados.length; i++) {
+      doc.text(dados[i].join(" | "), 10, y);
+      y += 8;
+      if (y > 280) { doc.addPage(); y = 20; }
     }
 
-    function coletarDados(nome) {
-      const dados = [];
-      const linhas = document.querySelectorAll("#tabela tr");
-      linhas.forEach((linha, i) => {
-        const cols = linha.querySelectorAll("td, th");
-        if (i === 0) {
-          dados.push(["Nome", ...Array.from(cols
+    doc.save("bolao_copa2026.pdf");
+  }
+</script>
