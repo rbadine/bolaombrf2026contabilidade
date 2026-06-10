@@ -3,12 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>Palpites</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsivo -->
   <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #f9f9f9;
       padding: 10px;
       margin: 0;
+    }
+    h1 {
+      text-align: center;
+      color: #006400; /* verde escuro */
+      margin-bottom: 20px;
     }
     .card {
       background: #fff;
@@ -25,13 +31,17 @@
     summary {
       font-weight: bold;
       cursor: pointer;
-      color: #2a5d84;
+      color: #006400; /* verde escuro */
     }
 
     /* Responsividade para celular */
     @media (max-width: 600px) {
       body {
         padding: 5px;
+        font-size: 14px;
+      }
+      h1 {
+        font-size: 1.4em;
       }
       .card {
         font-size: 14px;
@@ -44,7 +54,7 @@
   </style>
 </head>
 <body>
-  <h1>Jogos e Palpites</h1>
+  <h1>Palpites</h1>
 
   <div class="card"><strong>11/06/2026 - México vs África do Sul</strong><details><summary>Palpites</summary>Rene | Placar: 3 x 1 | Vencedor: México</details></div>
   <div class="card"><strong>11/06/2026 - Coreia do Sul vs Tchéquia</strong><details><summary>Palpites</summary>Rene | Placar: 1 x 1 | Vencedor: Empate</details></div>
@@ -73,4 +83,3 @@
 
 </body>
 </html>
-
